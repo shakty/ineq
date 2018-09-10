@@ -1,0 +1,8 @@
+{
+    "name": "ineq",
+    "version": "0.0.1",
+    "description": "This is a nodeGame game based on dictator",
+    "author": "Stefano Balietti <<futur.dorko@gmail.com>>",
+    "license": "MIT/X11",
+    "homepage": "http://nodegame.org"
+}
