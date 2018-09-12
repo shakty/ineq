@@ -20,9 +20,9 @@ module.exports = {
      *
      * Available modes:
      *
-     *   - �TIMEOUT�, waits until the time is up, then it checks
+     *   - `TIMEOUT`, waits until the time is up, then it checks
      *        whether enough players are connected to start the game.
-     *   - �WAIT_FOR_N_PLAYERS�, the game starts right away as soon as
+     *   - `WAIT_FOR_N_PLAYERS`, the game starts right away as soon as
      *        the desired number of connected players is reached.
      */
     EXECUTION_MODE: 'WAIT_FOR_N_PLAYERS',
@@ -32,7 +32,7 @@ module.exports = {
      *
      * The size of each group dispatched by the waiting room
      */
-    GROUP_SIZE: 2,
+    GROUP_SIZE: 1,
 
     /**
      * ## POOL_SIZE (number) Optional
@@ -43,7 +43,7 @@ module.exports = {
      *
      * Default: GROUP_SIZE
      */
-    POOL_SIZE: 2,
+    // POOL_SIZE: 1,
 
     /**
      * ## N_GAMES (number) Optional
