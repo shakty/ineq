@@ -1,7 +1,7 @@
 <!doctype html>
 <title>Ineq</title>
 <link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
-<script src="js/plotly-latest.min.js"></script>
+<script src="js/plotly.js"></script>
 <script src="js/jstat.js"></script>
 <style>
   /* Hide PlotLy Toolbar
@@ -19,14 +19,15 @@
       var node = parent.node;
       var W = parent.W;
       var J = parent.J;
-      
-      // global.
+
+
+      var nPoints = 101;
       jnorm = jStat.normal(2, 3);
 
-      x = jStat.seq(0,1,101);
+      x = jStat.seq(0, 1, nPoints);
       y = jnorm.pdf(x)[0];
 
-      yPoverty = J.rep([0.115], 101);
+      yPoverty = J.rep([0.115], nPoints);
       
       var income = {
           x: x,
@@ -80,6 +81,11 @@
           // showLink: true,
           // modeBarButtonsToRemove: ['toImage'] 
       };
+
+
+
+
+      
 
       Plotly.newPlot('myDiv', data, layout, config);      
 
