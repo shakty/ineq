@@ -19,7 +19,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // Initialize the client.
         var header, frame;
-        // header = W.generateHeader();
+        header = W.generateHeader();
         frame = W.generateFrame();
 
         // Add widgets.
@@ -28,7 +28,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // });
         // this.visualTimer = node.widgets.append('VisualTimer', header);
 
-        // this.doneButton = node.widgets.append('DoneButton', header);
+        this.doneButton = node.widgets.append('DoneButton', header);
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)

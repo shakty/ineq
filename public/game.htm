@@ -1,6 +1,7 @@
 <!doctype html>
 <title>Ineq</title>
 <link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
 <script src="js/plotly.js"></script>
 <script src="js/jstat.js"></script>
 <style>
@@ -29,19 +30,19 @@
       // X axis of all distributions.
       var left = 1;
       var right = 100;
-      
+
       var nPoints = 100;
       var x = jStat.seq(left, right, nPoints);
-      
+
       // Income and Poverty distribution.
       var incomeMean = 100;
-      var incomeSd = 50;
-      
-      var povertyLevel = 0.1;
+      var incomeSd = 10;
+
+      var povertyLevel = 0.02;
 
       // Talent distribution.
-      var talentMean = 1;
-      var talentSd = 50;
+      var talentMean = 50;
+      var talentSd = 20;
 
       // Type of mapping between income and talent.
       var mapType = 'RANDOM';
@@ -65,7 +66,7 @@
 
       // Div containing the plot.
       var myPlot;
-      
+
       // Create map.
       //////////////
 
@@ -99,13 +100,16 @@
 
       jnorm = jStat.normal(incomeMean, incomeSd);
       yIncome = jnorm.pdf(x)[0];
-      yPoverty = J.rep([povertyLevel]);
+      yPoverty = J.rep([povertyLevel], nPoints);
+
+      scaleCurveMult(yIncome, nPoints);
+      scaleCurveMult(yPoverty, nPoints);
 
       income = {
           x: x,
           y: yIncome,
           name: 'Income',
-          mode: 'lines',
+          mode: 'lines+marker',
           line: {
               color: 'rgb(219, 64, 82)',
               width: 6
@@ -119,13 +123,13 @@
           line: {
               dash: 'dashdot',
               color: 'rgb(55, 128, 191)',
-              width: 8
+              width: 6
           }
       };
 
       // Talent.
 
-      jnorm = jStat.normal(0, 1);
+      jnorm = jStat.normal(talentMean, talentSd);
       yTalent = jnorm.pdf(x)[0];
 
       talent = {
@@ -144,7 +148,8 @@
       data = [ income, povertyLine, talent ];
 
       layout = {
-          title: 'Income Distribution and Povery Line',
+          hovermode: 'closest',
+          // title: 'Income Distribution and Povery Line',
          // legend: {
          //     x: 0.2,
          //     y: 0.9,
@@ -154,7 +159,7 @@
          // },
           xaxis: {
               title: 'People with given income',
-              hoverformat: '.2r'
+              // hoverformat: '.2r'
               // range: [0.75, 5.25],
               // autorange: false
           },
@@ -186,7 +191,8 @@
       };
 
       // Do Plot.
-
+      debugger
+      
       myPlot = document.getElementById('myDiv');
       Plotly.newPlot(myPlot, data, layout, config);
 
@@ -194,9 +200,12 @@
 
       myPlot.on('plotly_hover', function(eventData){
           // console.log(eventData);
+          var hoveredCurve, incomePoint, talentPoint;
+          hoveredCurve = eventData.points[0].curveNumber;
+          // Poverty line, do nothing.
+          if (hoveredCurve === 1) return;
 
-          var incomePoint, talentPoint;
-          if (eventData.points[0].curveNumber == 0) {
+          if (hoveredCurve === 0) {
               incomePoint = eventData.points[0].pointNumber;
               talentPoint = mapIncome2Talent[incomePoint];
           }
@@ -204,11 +213,25 @@
               talentPoint = eventData.points[0].pointNumber;
               incomePoint = mapIncome2Talent[talentPoint];
           }
+
           Plotly.Fx.hover(myPlot, [
               { curveNumber: 0, pointNumber: incomePoint },
               { curveNumber: 2, pointNumber: talentPoint }
           ], ['xy', 'x2y2']);
       });
 
+      // Helper functions.
+
+      function scaleCurveAdd(y, increment) {
+          for (var i = 0; i < y.length; i++) {
+              y[i] += increment;
+          }
+      }
+
+      function scaleCurveMult(y, mult) {
+          for (var i = 0; i < y.length; i++) {
+              y[i] *= mult;
+          }
+      }
   };
 </script>
