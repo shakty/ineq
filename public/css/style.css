@@ -4,3 +4,7 @@
   font-size: 20px;
 }
 
+.income-tooltip {
+  background: white;
+  border: 1px solid black;
+}

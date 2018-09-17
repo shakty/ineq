@@ -11,6 +11,11 @@ var J = parent.J;
 function doPlot(s) {
     s = s || {};
 
+    // Indexes to get info back from array of mapped points.
+    // @see getPointsFromEvent
+    var iIdx = 0;
+    var tIdx = 1;
+    
     // Get and conf plot DIV.
     
     var divId = s.divId || 'myDiv';
@@ -20,7 +25,11 @@ function doPlot(s) {
 
     // Size.
     myPlot.style.width = s.plotWidth || '700px';
-    myPlot.style.height = s.plotHeight || '700px';
+    myPlot.style.height = s.plotHeight || '500px';
+
+    // Examples Div.
+
+    var examplesDiv = document.getElementById('examples');
     
     // Plot settings.
     
@@ -129,7 +138,7 @@ function doPlot(s) {
         x: x,
         y: yIncome,
         name: 'Income',
-        mode: 'lines+marker',
+        mode: 'scatter',
         line: {
             color: 'rgb(219, 64, 82)',
             width: 6
@@ -178,20 +187,22 @@ function doPlot(s) {
         //     yref: 'paper'
         // },
         xaxis: {
-            title: 'People with given income',
+            // title: 'People with given income',
             // hoverformat: '.2r'
             range: [ -padSides, right + padSides],
+            fixedrange: true
             // autorange: false
         },
         yaxis: {
             title: 'Income Share (%) of Total',
-            domain: [0.55, 1],
+            domain: [0.3, 1],
             hoverformat: '.2r',
-            range: yIncomeRange
+            range: yIncomeRange,
+            fixedrange: true
         },
 
         yaxis2: {
-            domain: [0, 0.45],
+            domain: [0, 0.25],
             hoverformat: '.2r'
         },
         xaxis2: {
@@ -200,12 +211,12 @@ function doPlot(s) {
             range: [ -padSides, right + padSides],
             // hoverformat: '.2r'
         },
-        // showLegend: false
+        showlegend: false
     };
 
     config = {
-        // editable: true,
-        // scrollZoom: true,
+        editable: false,
+        scrollZoom: false,
         // staticPlot: true,
         displayModeBar: false,
         // showLink: true,
@@ -220,11 +231,55 @@ function doPlot(s) {
 
     myPlot.on('plotly_hover', function(eventData){
         // console.log(eventData);
+        var points;
+        points = getPointsFromEvent(eventData);
+        if (!points) return;
+        
+        Plotly.Fx.hover(myPlot, [
+            { curveNumber: 0, pointNumber: points[iIdx] },
+            { curveNumber: 2, pointNumber: points[tIdx] }
+        ], ['xy', 'x2y2']);        
+    });
+
+    myPlot.on('plotly_click', function(eventData) {
+        var points;
+        points = getPointsFromEvent(eventData, { skipTalent: true });
+        if (!points) return;
+
+        var text, annotation;
+
+        text = '<span class="income-tooltip">';
+        text += 'Income = ' + eventData.points[0].y.toPrecision(2);
+        text += '<br>Talent = ' + points[tIdx];
+        text += '</span>';
+        
+        annotation = {
+            text: text,
+            x: eventData.points[0].x,
+            y: parseFloat(eventData.points[0].y.toPrecision(4))
+        }
+
+        // annotations = self.layout.annotations || [];
+        // annotations.push(annotation);
+        Plotly.relayout(myPlot, { annotations: [ annotation ] })
+        
+        writeExamples(points[iIdx], null, points[tIdx], null);
+    });
+
+    // Helper functions.
+
+    function getPointsFromEvent(eventData, opts) {
         var hoveredCurve, incomePoint, talentPoint;
         hoveredCurve = eventData.points[0].curveNumber;
+        
         // Poverty line, do nothing.
-        if (hoveredCurve === 1) return;
+        if (hoveredCurve === 1) return false;
 
+        opts = opts || {};
+        
+        // Should I skip others?
+        if (opts.skipTalent && hoveredCurve === 2) return false;
+        
         if (hoveredCurve === 0) {
             incomePoint = eventData.points[0].pointNumber;
             talentPoint = mapIncome2Talent[incomePoint];
@@ -233,15 +288,9 @@ function doPlot(s) {
             talentPoint = eventData.points[0].pointNumber;
             incomePoint = mapIncome2Talent[talentPoint];
         }
-
-        Plotly.Fx.hover(myPlot, [
-            { curveNumber: 0, pointNumber: incomePoint },
-            { curveNumber: 2, pointNumber: talentPoint }
-        ], ['xy', 'x2y2']);
-    });
-
-    // Helper functions.
-
+        return [ incomePoint, talentPoint ];
+    }
+    
     function scaleCurveMult(y, mult) {
         for (var i = 0; i < y.length; i++) {
             y[i] *= mult;
@@ -254,4 +303,19 @@ function doPlot(s) {
         }
     }
 
+    function writeExamples(xIncome, yIncome, xTalent, yTalent) {
+        var str;
+        str = 'This person can afford to live in a BIG ' +
+            'house and have dinner every day out and still earning enough to ' +
+            'buy a yacht';
+        str += '<br/>';
+        str += 'The talent of this person is truly extraordinary.';
+        examplesDiv.innerHTML = str;
+    }
+}
+
+function simulateTalent(collection) {
+    for (var i = 0; i < collection.length; i++) {
+        
+    }
 }
