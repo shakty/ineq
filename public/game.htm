@@ -29,13 +29,15 @@
       // X axis of all distributions.
       var left = 1;
       var right = 100;
+      
+      var nPoints = 100;
       var x = jStat.seq(left, right, nPoints);
-      var nPoints = x.length;
-
+      
       // Income and Poverty distribution.
       var incomeMean = 100;
-      var incomeSd = 3;
-      var povertyLevel = 10;
+      var incomeSd = 50;
+      
+      var povertyLevel = 0.1;
 
       // Talent distribution.
       var talentMean = 1;
@@ -97,16 +99,16 @@
 
       jnorm = jStat.normal(incomeMean, incomeSd);
       yIncome = jnorm.pdf(x)[0];
-      yPoverty = J.rep([povertyLevel], nPoints);
+      yPoverty = J.rep([povertyLevel]);
 
       income = {
           x: x,
           y: yIncome,
           name: 'Income',
           mode: 'lines',
-          marker: {
+          line: {
               color: 'rgb(219, 64, 82)',
-              size: 2
+              width: 6
           }
       };
       povertyLine = {
@@ -117,7 +119,7 @@
           line: {
               dash: 'dashdot',
               color: 'rgb(55, 128, 191)',
-              width: 3
+              width: 8
           }
       };
 
@@ -133,7 +135,7 @@
           mode: 'lines',
           line: {
               color: '#000',
-              width: 2
+              width: 6
           },
           xaxis: 'x2',
           yaxis: 'y2'
@@ -169,7 +171,7 @@
           xaxis2: {
               anchor: 'y2',
               title: 'Talent',
-              hoverformat: '.2r'
+              // hoverformat: '.2r'
           },
           showLegend: false
       };
@@ -191,7 +193,7 @@
       // Hovering.
 
       myPlot.on('plotly_hover', function(eventData){
-          console.log(eventData);
+          // console.log(eventData);
 
           var incomePoint, talentPoint;
           if (eventData.points[0].curveNumber == 0) {
