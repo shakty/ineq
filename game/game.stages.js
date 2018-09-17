@@ -17,6 +17,10 @@ module.exports = function(stager, settings) {
         .next('end')
         .gameover();
 
+    stager.extendStage('game', {
+        steps: [ 'v1', 'v2' ]
+    });
+    
     // Modify the stager to skip one stage.
     stager.skip('instructions');
 };

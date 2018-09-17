@@ -38,14 +38,23 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'instructions.htm'
     });
 
-    stager.extendStep('game', {
+    stager.extendStep('v1', {
         donebutton: false,
         frame: 'game.htm',
         cb: function() {
-            
+            console.log('v1');
         }
     });
 
+
+    stager.extendStep('v1', {
+        donebutton: false,
+        frame: 'game.htm',
+        cb: function() {
+            console.log('v2');
+        }
+    });
+    
     stager.extendStep('end', {
         donebutton: false,
         frame: 'end.htm',
