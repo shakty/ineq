@@ -69,7 +69,7 @@ function doPlot(s) {
     var ynorm;
 
     // Y axis values.
-    var yIncome, yPoverty, yTalent;
+    var yIncome, yPoverty, yTalent, yIncomeRange;
 
     // Maps.
     var maps, mapIncome2Talent, mapTalent2Income;
@@ -120,7 +120,11 @@ function doPlot(s) {
 
     if (incIncome) scaleCurveInc(yIncome, incIncome);
     if (incPoverty) scaleCurveInc(yPoverty, incPoverty);
+debugger
+    yIncomeRange = Math.max(yIncome.concat([povertyLevel]));
+    yIncomeRange = [ 0, yIncomeRange * 1.05 ];
 
+    console.log(yIncomeRange);
     
     income = {
         x: x,
@@ -183,7 +187,8 @@ function doPlot(s) {
         yaxis: {
             title: 'Income Share (%) of Total',
             domain: [0.55, 1],
-            hoverformat: '.2r'
+            hoverformat: '.2r',
+            range: yIncomeRange
         },
 
         yaxis2: {
@@ -195,7 +200,7 @@ function doPlot(s) {
             title: 'Talent',
             // hoverformat: '.2r'
         },
-        showLegend: false
+        // showLegend: false
     };
 
     config = {

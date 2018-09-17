@@ -49,9 +49,6 @@ module.exports = {
     // Number of game rounds repetitions.
     REPEAT: 4,
 
-    // In case an incoming offer does not pass validation, which indicates
-    // cheating, re-set the dictator's offer to this value.
-    defaultOffer: 100,
 
     // # Treatments definition.
 
@@ -65,14 +62,23 @@ module.exports = {
 
         standard: {
             fullName: "Standard Treatment",
-            description: "Longer time",
-            bidTime: 30000
-        },
+            description: "---",
 
-        pressure: {
-            fullName: "Time Pressure Treatment",
-            description: "Short times to take decisions",
-            bidTime: 10000
+            incomeMean: 110,
+
+            incomeSd: 10,
+
+            povertyLevel: 0.02,
+
+            multIncome: 1000,
+
+            multPoverty: 1000,
+
+            incIncome: 5,
+
+            // incPoverty: 200
+           
+         
         }
 
     }
