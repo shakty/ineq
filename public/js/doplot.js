@@ -27,7 +27,8 @@ function doPlot(s) {
     // X axis of all distributions.
     var left = 'undefined' === typeof s.left ? 1 : s.left;
     var right = 'undefined' === typeof s.right ? 100 : s.right;
-
+    var padSides = 'undefined' === typeof s.padSides ? 2 : s.padSides;
+    
     var nPoints = 'undefined' === typeof s.nPoints ? 100 : s.nPoints;
     var x = jStat.seq(left, right, nPoints);
 
@@ -120,12 +121,10 @@ function doPlot(s) {
 
     if (incIncome) scaleCurveInc(yIncome, incIncome);
     if (incPoverty) scaleCurveInc(yPoverty, incPoverty);
-debugger
-    yIncomeRange = Math.max(yIncome.concat([povertyLevel]));
+
+    yIncomeRange = Math.max.apply(null, yIncome.concat([povertyLevel]));
     yIncomeRange = [ 0, yIncomeRange * 1.05 ];
 
-    console.log(yIncomeRange);
-    
     income = {
         x: x,
         y: yIncome,
@@ -181,7 +180,7 @@ debugger
         xaxis: {
             title: 'People with given income',
             // hoverformat: '.2r'
-            // range: [0.75, 5.25],
+            range: [ -padSides, right + padSides],
             // autorange: false
         },
         yaxis: {
@@ -198,6 +197,7 @@ debugger
         xaxis2: {
             anchor: 'y2',
             title: 'Talent',
+            range: [ -padSides, right + padSides],
             // hoverformat: '.2r'
         },
         // showLegend: false
