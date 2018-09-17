@@ -76,6 +76,8 @@ module.exports = {
 
             incIncome: 5,
 
+            mapType: 'PERFECT'
+
             // incPoverty: 200
            
          

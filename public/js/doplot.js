@@ -103,6 +103,10 @@ function doPlot(s) {
                 mapTalent2Income[mapIncome2Talent[i]] = i;
             }
         }
+        else if (mapType === "PERFECT") {
+            mapTalent2Income = x;
+            mapIncome2Talent = x; 
+        }
         else {
             throw new Error('Unknown map type :' + mapType);
         }
@@ -178,7 +182,7 @@ function doPlot(s) {
 
     layout = {
         hovermode: 'closest',
-        // title: 'Income Distribution and Povery Line',
+        title: 'Income Distribution and Talent',
         // legend: {
         //     x: 0.2,
         //     y: 0.9,
