@@ -20,27 +20,65 @@
       var W = parent.W;
       var J = parent.J;
 
-      var nPoints = 101;
-      var sequence = J.seq(0, nPoints);
-
       // TODO: check vars/globals in Production.
+      //////////////////////////////////////////
 
-      var type = 'RANDOM';
+      // Settings.
+      ////////////
 
+      // X axis of all distributions.
+      var left = 1;
+      var right = 100;
+      var x = jStat.seq(left, right, nPoints);
+      var nPoints = x.length;
+
+      // Income and Poverty distribution.
+      var incomeMean = 100;
+      var incomeSd = 3;
+      var povertyLevel = 10;
+
+      // Talent distribution.
+      var talentMean = 1;
+      var talentSd = 50;
+
+      // Type of mapping between income and talent.
+      var mapType = 'RANDOM';
+
+      // Var iniatialized later.
+
+      // Plotly traces.
+      var income, povertyLine, talent;
+
+      // Normal distribution generator.
+      var ynorm;
+
+      // Y axis values.
+      var yIncome, yPoverty, yTalent;
+
+      // Maps.
+      var maps, mapIncome2Talent, mapTalent2Income;
+
+      // Plotly params.
+      var data, layout, config;
+
+      // Div containing the plot.
+      var myPlot;
+      
       // Create map.
+      //////////////
 
-      function createMaps(type) {
+      function createMaps(mapType) {
           var i, t, tmp;
           var mapIncome2Talent = new Array(nPoints);
           var mapTalent2Income = new Array(nPoints);
-          if (type === 'RANDOM') {
-              mapIncome2Talent = J.shuffle(sequence);
+          if (mapType === 'RANDOM') {
+              mapIncome2Talent = J.shuffle(x);
               for (i = 0; i < nPoints; i++) {
-                  mapTalent2Income[mapIncome2Talent[i]] = i; 
+                  mapTalent2Income[mapIncome2Talent[i]] = i;
               }
           }
           else {
-              throw new Error('Unknown map type :' + type);
+              throw new Error('Unknown map type :' + mapType);
           }
           return {
               mapIncome2Talent: mapIncome2Talent,
@@ -48,19 +86,20 @@
           };
       }
 
-      var maps = createMaps(type);
+      maps = createMaps(mapType);
       mapIncome2Talent = maps.mapIncome2Talent;
       mapTalent2Income = maps.mapTalent2Income;
-      
-      x = jStat.seq(0, 1, nPoints);
+
+      // Setup Plotly Lines.
+      ////////////////
 
       // Income & Povery Line.
 
-      jnorm = jStat.normal(2, 3);
+      jnorm = jStat.normal(incomeMean, incomeSd);
       yIncome = jnorm.pdf(x)[0];
-      yPoverty = J.rep([0.115], nPoints);
+      yPoverty = J.rep([povertyLevel], nPoints);
 
-      var income = {
+      income = {
           x: x,
           y: yIncome,
           name: 'Income',
@@ -70,7 +109,7 @@
               size: 2
           }
       };
-      var povertyLine = {
+      povertyLine = {
           x: x,
           y: yPoverty,
           name: 'Poverty Line',
@@ -87,7 +126,7 @@
       jnorm = jStat.normal(0, 1);
       yTalent = jnorm.pdf(x)[0];
 
-      var talent = {
+      talent = {
           x: x,
           y: yTalent,
           name: 'Talent',
@@ -100,9 +139,9 @@
           yaxis: 'y2'
       };
 
-      var data = [ income, povertyLine, talent ];
+      data = [ income, povertyLine, talent ];
 
-      var layout = {
+      layout = {
           title: 'Income Distribution and Povery Line',
          // legend: {
          //     x: 0.2,
@@ -112,26 +151,30 @@
          //     yref: 'paper'
          // },
           xaxis: {
-              title: 'People with given income'
+              title: 'People with given income',
+              hoverformat: '.2r'
               // range: [0.75, 5.25],
               // autorange: false
           },
           yaxis: {
               title: 'Income Share (%) of Total',
-              domain: [0, 0.45]
+              domain: [0.55, 1],
+              hoverformat: '.2r'
           },
 
           yaxis2: {
-              domain: [0.55, 1]
+              domain: [0, 0.45],
+              hoverformat: '.2r'
           },
           xaxis2: {
               anchor: 'y2',
-              title: 'Talent'
+              title: 'Talent',
+              hoverformat: '.2r'
           },
           showLegend: false
       };
 
-      var config = {
+      config = {
           // editable: true,
           // scrollZoom: true,
           // staticPlot: true,
@@ -140,13 +183,13 @@
           // modeBarButtonsToRemove: ['toImage']
       };
 
-      // Plot.
+      // Do Plot.
 
-      var myPlot = document.getElementById('myDiv');
+      myPlot = document.getElementById('myDiv');
       Plotly.newPlot(myPlot, data, layout, config);
 
       // Hovering.
-      
+
       myPlot.on('plotly_hover', function(eventData){
           console.log(eventData);
 
@@ -164,6 +207,6 @@
               { curveNumber: 2, pointNumber: talentPoint }
           ], ['xy', 'x2y2']);
       });
-      
+
   };
 </script>
