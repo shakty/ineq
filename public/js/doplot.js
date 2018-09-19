@@ -11,6 +11,9 @@ var J = parent.J;
 function doPlot(s) {
     s = s || {};
 
+    // Store user's actions on chart.
+    var actions = [];
+    
     // Indexes to get info back from array of mapped points.
     // @see getPointsFromEvent
     var iIdx = 0;
@@ -252,7 +255,7 @@ function doPlot(s) {
         Plotly.Fx.hover(myPlot, [
             { curveNumber: 0, pointNumber: points[iIdx] },
             { curveNumber: 2, pointNumber: points[tIdx] }
-        ], ['xy', 'x2y2']);        
+        ], ['xy', 'x2y2']);
     });
 
     myPlot.on('plotly_click', function(eventData) {
@@ -297,18 +300,18 @@ function doPlot(s) {
     // Helper functions.
 
     function getPointsFromEvent(eventData, opts) {
-        var hoveredCurve, incomePoint, talentPoint;
-        hoveredCurve = eventData.points[0].curveNumber;
+        var curve, incomePoint, talentPoint;
+        curve = eventData.points[0].curveNumber; 
         
         // Poverty line, do nothing.
-        if (hoveredCurve === 1) return false;
+        if (curve === 1) return false;
 
         opts = opts || {};
         
         // Should I skip others?
-        if (opts.skipTalent && hoveredCurve === 2) return false;
+        if (opts.skipTalent && curve === 2) return false;       
         
-        if (hoveredCurve === 0) {
+        if (curve === 0) {
             incomePoint = eventData.points[0].pointNumber;
             talentPoint = mapIncome2Talent[incomePoint];
         }
@@ -316,6 +319,15 @@ function doPlot(s) {
             talentPoint = eventData.points[0].pointNumber;
             incomePoint = mapIncome2Talent[talentPoint];
         }
+
+        // Register action (hover or click).
+        actions.push({
+            type: eventData.event.type === 'mousedown' ? 'c' : 'h',  
+            time: J.now(),
+            i: incomePoint,
+            t: talentPoint
+        });
+
         return [ incomePoint, talentPoint ];
     }
     
@@ -337,11 +349,11 @@ function doPlot(s) {
             house: {
                 text: 'Live in a mansion of 3000sq with 20acres garden, ' +
                     'several people employed to mantain it, security guards.',
-                img: 'mansion.jpg'
+                img: 'house1.jpg'
             },
             commute: {
                 text: 'No commute, or commute via private limo',
-                img: 'limo.jpg'
+                img: 'commute1.jpg'
             },
             health: {
                 text: 'Can afford any treatment for any curable disease from ' +
@@ -363,15 +375,15 @@ function doPlot(s) {
         {
             house: {
                 text: 'Live in a private house 2floors with garden',
-                img: 'house.jpg'
+                img: 'house2.jpg'
             },
             commute: {
                 text: 'Commute by car to work, up to 30minutes',
-                img: 'car.jpg'
+                img: 'commute2.jpg'
             },
             health: {
                 text: 'Can afford most treatments from the best doctors.',
-                img: 'hospitalB.jpg',
+                img: 'hospital2.jpg',
             },
             vacation: {
                 text: 'Anywhere in the world nice residences',
@@ -380,23 +392,23 @@ function doPlot(s) {
             school: {
                 text: 'Can afford to send his/her children to' +
                     'colleges 50USD+ per year',
-                img: 'private_college.jpg'
+                img: 'college2.jpg'
             }
         },
         
         {
             house: {
                 text: 'Live in a 2bed apartment',
-                img: 'apartment.jpg'
+                img: 'house3.jpg'
             },
             commute: {
                 text: 'Commute by car to work, 45minutes - 1hour',
-                img: 'car.jpg'
+                img: 'commute3.jpg'
             },
             health: {
                 text: 'Has health insurance, but needs to be careful about ' +
                     'which treatments he/she can afford',
-                img: 'hospitalC.jpg',
+                img: 'hospital3.jpg',
             },
             vacation: {
                 text: 'In the state, occasionally to other states',
@@ -405,23 +417,23 @@ function doPlot(s) {
             school: {
                 text: 'Can afford to send his/her children to' +
                     'public colleges or private 10kUSD+ per year',
-                img: 'public_school1.jpg'
+                img: 'college3.jpg'
             }
         },
         
         {
             house: {
                 text: 'Rent a small apartment',
-                img: 'apartment_rent.jpg'
+                img: 'house4.jpg'
             },
             commute: {
                 text: 'Commute by car or public transport when available ' +
                     'to work, 1hour-1hour30minutes',
-                img: 'car_or_public.jpg'
+                img: 'commute4.jpg'
             },
             health: {
                 text: 'Has medicare insurance',
-                img: 'medicare.jpg',
+                img: 'hospital4.png',
             },
             vacation: {
                 text: 'Occasional trips within the state',
@@ -429,22 +441,22 @@ function doPlot(s) {
             },
             school: {
                 text: 'Cannot afford to pay college education to children',
-                img: 'no_edu.jpg'
+                img: 'no_college.jpg'
             }
         },
         
         {
             house: {
                 text: 'Homeless or public shelters',
-                img: 'homeless.jpg'
+                img: 'no_house.jpg'
             },
             commute: {
                 text: 'No job, no commute',
-                img: 'nojob.jpg'
+                img: 'no_job.png'
             },
             health: {
                 text: 'No insurance',
-                img: 'no_insurance.jpg',
+                img: 'no_hospital.jpg',
             },
             vacation: {
                 text: 'No vacation',
@@ -452,7 +464,7 @@ function doPlot(s) {
             },
             school: {
                 text: 'Cannot afford to pay college education to children',
-                img: 'no_edu.jpg'
+                img: 'no_college.jpg'
             }
         }
     ];
@@ -492,8 +504,11 @@ function doPlot(s) {
         schoolImg.src = 'imgs/' + ref.school.img;
     }
 
+    var rotate = -1;
     function mapIncomeToExamples(income) {
-        return 0; //J.randomInt(-1, (examples.length - 1));
+        rotate++;
+        if (rotate >= examples.length) rotate = 0;
+        return rotate; //J.randomInt(-1, (examples.length - 1));
     }
 }
 
