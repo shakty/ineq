@@ -4,7 +4,27 @@
   font-size: 20px;
 }
 
+/* Fix this */
 .income-tooltip {
   background: white;
   border: 1px solid black;
+}
+
+.example-img {
+  width: 150px;
+  height: 150px;
+}
+
+#examples-table {
+  width: 100%;
+}
+
+.example-td-title: {
+  width: 100px;
+}
+
+.example-td-text: {
+  width: 600px;
+  text-align: left;
+  padding: 5px;
 }

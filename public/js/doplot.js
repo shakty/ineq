@@ -199,15 +199,22 @@ function doPlot(s) {
         },
         yaxis: {
             title: 'Income Share (%) of Total',
-            domain: [0.3, 1],
+            domain: [0.25, 1],
             hoverformat: '.2r',
             range: yIncomeRange,
             fixedrange: true
         },
 
         yaxis2: {
-            domain: [0, 0.25],
-            hoverformat: '.2r'
+            domain: [0, 0.2],
+            hoverformat: '.2r',
+            range: [0, 100],
+            // Hide axe.
+            showgrid: false,
+            zeroline: false,
+            showline: false,
+            ticks: '',
+            showticklabels: false
         },
         xaxis2: {
             anchor: 'y2',
@@ -321,14 +328,169 @@ function doPlot(s) {
         }
     }
 
+
+    var examples = [
+        {
+            house: {
+                text: 'Live in a mansion of 3000sq with 20acres garden, ' +
+                    'several people employed to mantain it, security guards.',
+                img: 'mansion.jpg'
+            },
+            commute: {
+                text: 'No commute, or commute via private limo',
+                img: 'limo.jpg'
+            },
+            health: {
+                text: 'Can afford any treatment for any curable disease from ' +
+                    'the best doctors.',
+                img: 'hospitalA.jpg'
+            },
+            vacation: {
+                text: 'Anywhere in the world exclusive residences',
+                img: 'vacation1.jpg'
+            },
+            school: {
+                text: 'Can afford to send his/her children to the best ' +
+                    'colleges 100USD+ per year',
+                img: 'college1.jpg'
+            }
+        },
+
+
+        {
+            house: {
+                text: 'Live in a private house 2floors with garden',
+                img: 'house.jpg'
+            },
+            commute: {
+                text: 'Commute by car to work, up to 30minutes',
+                img: 'car.jpg'
+            },
+            health: {
+                text: 'Can afford most treatments from the best doctors.',
+                img: 'hospitalB.jpg',
+            },
+            vacation: {
+                text: 'Anywhere in the world nice residences',
+                img: 'vacation2.jpg',
+            },
+            school: {
+                text: 'Can afford to send his/her children to' +
+                    'colleges 50USD+ per year',
+                img: 'private_college.jpg'
+            }
+        },
+        
+        {
+            house: {
+                text: 'Live in a 2bed apartment',
+                img: 'apartment.jpg'
+            },
+            commute: {
+                text: 'Commute by car to work, 45minutes - 1hour',
+                img: 'car.jpg'
+            },
+            health: {
+                text: 'Has health insurance, but needs to be careful about ' +
+                    'which treatments he/she can afford',
+                img: 'hospitalC.jpg',
+            },
+            vacation: {
+                text: 'In the state, occasionally to other states',
+                img: 'vacation3.jpg',
+            },
+            school: {
+                text: 'Can afford to send his/her children to' +
+                    'public colleges or private 10kUSD+ per year',
+                img: 'public_school1.jpg'
+            }
+        },
+        
+        {
+            house: {
+                text: 'Rent a small apartment',
+                img: 'apartment_rent.jpg'
+            },
+            commute: {
+                text: 'Commute by car or public transport when available ' +
+                    'to work, 1hour-1hour30minutes',
+                img: 'car_or_public.jpg'
+            },
+            health: {
+                text: 'Has medicare insurance',
+                img: 'medicare.jpg',
+            },
+            vacation: {
+                text: 'Occasional trips within the state',
+                img: 'vacation4.jpg',
+            },
+            school: {
+                text: 'Cannot afford to pay college education to children',
+                img: 'no_edu.jpg'
+            }
+        },
+        
+        {
+            house: {
+                text: 'Homeless or public shelters',
+                img: 'homeless.jpg'
+            },
+            commute: {
+                text: 'No job, no commute',
+                img: 'nojob.jpg'
+            },
+            health: {
+                text: 'No insurance',
+                img: 'no_insurance.jpg',
+            },
+            vacation: {
+                text: 'No vacation',
+                img: 'no_vacation.jpg'
+            },
+            school: {
+                text: 'Cannot afford to pay college education to children',
+                img: 'no_edu.jpg'
+            }
+        }
+    ];
+
+    // TODO: write closure.
+    var houseText, houseImg, commuteText, commuteImg,
+        healthText, healthImg, vacationText, vacationImg,
+        schoolText, schoolImg;
+
+    houseText = document.getElementById('house-text-td');
+    houseImg = document.getElementById('house-img');
+    commuteText = document.getElementById('commute-text-td');
+    commuteImg = document.getElementById('commute-img');
+    healthText = document.getElementById('healt-text-td');
+    healthImg = document.getElementById('health-img');
+    vacationText = document.getElementById('vacation-text-td');
+    vacationImg = document.getElementById('vacation-img');
+    schoolText = document.getElementById('school-text-td');
+    schoolImg = document.getElementById('school-img');
+    
     function writeExamples(xIncome, yIncome, xTalent, yTalent) {
-        var str;
-        str = 'This person can afford to live in a BIG ' +
-            'house and have dinner every day out and still earning enough to ' +
-            'buy a yacht';
-        str += '<br/>';
-        str += 'The talent of this person is truly extraordinary.';
-        examplesDiv.innerHTML = str;
+        var idxIncome, ref;
+
+        idxIncome = mapIncomeToExamples(yIncome);
+        // idxIncome = 0;
+        ref = examples[idxIncome];
+
+        houseText.innerHTML = ref.house.text;
+        houseImg.src = 'imgs/' + ref.house.img;
+        commuteText.innerHTML = ref.commute.text;
+        commuteImg.src = 'imgs/' + ref.commute.img;
+        healthText.innerHTML = ref.health.text;
+        healthImg.src = 'imgs/' + ref.health.img;
+        vacationText.innerHTML = ref.vacation.text;
+        vacationImg.src = 'imgs/' + ref.vacation.img;
+        schoolText.innerHTML = ref.school.text;
+        schoolImg.src = 'imgs/' + ref.school.img;
+    }
+
+    function mapIncomeToExamples(income) {
+        return J.randomInt(-1, (examples.length - 1));
     }
 }
 
