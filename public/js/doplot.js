@@ -361,7 +361,8 @@ function doPlot(s) {
                 img: 'hospital1.jpg'
             },
             vacation: {
-                text: 'Anywhere in the world exclusive residences',
+                text: 'Anywhere in the world with private and exclusive ' +
+                    'residences.',
                 img: 'vacation1.jpg'
             },
             school: {
@@ -374,11 +375,11 @@ function doPlot(s) {
 
         {
             house: {
-                text: 'Live in a private house 2floors with garden',
+                text: 'Live in a private 2floor house with garden.',
                 img: 'house2.jpg'
             },
             commute: {
-                text: 'Commute by car to work, up to 30minutes',
+                text: 'Commute by car to work, up to 30minutes.',
                 img: 'commute2.jpg'
             },
             health: {
@@ -386,19 +387,19 @@ function doPlot(s) {
                 img: 'hospital2.jpg',
             },
             vacation: {
-                text: 'Anywhere in the world nice residences',
+                text: 'Anywhere in the world in nice residences.',
                 img: 'vacation2.jpg',
             },
             school: {
                 text: 'Can afford to send his/her children to' +
-                    'colleges 50USD+ per year',
+                    'colleges 50USD+ per year.',
                 img: 'college2.jpg'
             }
         },
         
         {
             house: {
-                text: 'Live in a 2bed apartment',
+                text: 'Live in private or rented apartment.',
                 img: 'house3.jpg'
             },
             commute: {
@@ -423,7 +424,8 @@ function doPlot(s) {
         
         {
             house: {
-                text: 'Rent a small apartment',
+                text: 'Rent a small apartment or a small house in a periferic ' +
+                    'area.',
                 img: 'house4.jpg'
             },
             commute: {
@@ -432,38 +434,38 @@ function doPlot(s) {
                 img: 'commute4.jpg'
             },
             health: {
-                text: 'Has medicare insurance',
+                text: 'Has medicare insurance.',
                 img: 'hospital4.png',
             },
             vacation: {
-                text: 'Occasional trips within the state',
+                text: 'Occasional trips within the state.',
                 img: 'vacation4.jpg',
             },
             school: {
-                text: 'Cannot afford to pay college education to children',
+                text: 'Cannot afford to pay college education to children.',
                 img: 'no_college.jpg'
             }
         },
         
         {
             house: {
-                text: 'Homeless or public shelters',
+                text: 'Homeless or public shelters.',
                 img: 'no_house.jpg'
             },
             commute: {
-                text: 'No job, no commute',
+                text: 'No job.',
                 img: 'no_job.png'
             },
             health: {
-                text: 'No insurance',
+                text: 'No insurance.',
                 img: 'no_hospital.jpg',
             },
             vacation: {
-                text: 'No vacation',
+                text: 'No vacations.',
                 img: 'no_vacation.jpg'
             },
             school: {
-                text: 'Cannot afford to pay college education to children',
+                text: 'Cannot afford to pay college education to children.',
                 img: 'no_college.jpg'
             }
         }
@@ -488,7 +490,7 @@ function doPlot(s) {
     function writeExamples(xIncome, yIncome, xTalent, yTalent) {
         var idxIncome, ref;
 
-        idxIncome = mapIncomeToExamples(yIncome);
+        idxIncome = mapIncomeToExamples(xIncome, yIncome);
         // idxIncome = 0;
         ref = examples[idxIncome];
 
@@ -504,11 +506,14 @@ function doPlot(s) {
         schoolImg.src = 'imgs/' + ref.school.img;
     }
 
-    var rotate = -1;
-    function mapIncomeToExamples(income) {
-        rotate++;
-        if (rotate >= examples.length) rotate = 0;
-        return rotate; //J.randomInt(-1, (examples.length - 1));
+    // var rotate = -1;
+    function mapIncomeToExamples(xIncome, yIncome) {
+        // debugger
+        // rotate++;
+        // if (rotate >= examples.length) rotate = 0;
+        // return rotate; //J.randomInt(-1, (examples.length - 1));
+        // if (xIncome === 0) return 4;
+        return Math.floor(5 - ((xIncome + 1) / (nPoints / 5)));
     }
 }
 

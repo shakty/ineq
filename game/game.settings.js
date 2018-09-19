@@ -53,7 +53,7 @@ module.exports = {
 
     incomeSd: 10,
 
-    povertyLevel: 0.02,
+    povertyLevel: 0.002,
 
     multIncome: 1000,
 
