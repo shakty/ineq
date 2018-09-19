@@ -42,12 +42,50 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         donebutton: false,
         frame: 'game.htm',
         cb: function() {
+            var header, btnUnfair, btnRedstr;
+            var toggleUnfair, toggleRedstr;
+            
+            header = W.getHeader();
+            btnUnfair = document.createElement('button');
+            btnUnfair.className = 'btn btn-lg btn-primary';
+            btnUnfair.innerHTML = 'Unfair';
+            toggleUnfair = false;
+            btnUnfair.onclick = function() {
+                if (toggleUnfair) {
+                    btnUnfair.className = 'btn btn-lg btn-primary';
+                    toggleUnfair = false;
+                }
+                else {
+                    btnUnfair.className = 'btn btn-lg btn-danger';
+                    toggleUnfair = true;
+                }
+            };
+            header.appendChild(btnUnfair);
+
+            header.appendChild(document.createTextNode(' '));
+            
+            btnRedstr = document.createElement('button');
+            btnRedstr.className = 'btn btn-lg btn-primary';
+            btnRedstr.innerHTML = 'Redistribute';
+            toggleRedstr = false;
+            btnRedstr.onclick = function() {
+                if (toggleRedstr) {
+                    btnRedstr.className = 'btn btn-lg btn-primary';
+                    toggleRedstr = false;
+                }
+                else {
+                    btnRedstr.className = 'btn btn-lg btn-danger';
+                    toggleRedstr = true;
+                }
+            };
+            header.appendChild(btnRedstr);
+            
             console.log('v1');
         }
     });
 
 
-    stager.extendStep('v1', {
+    stager.extendStep('v2', {
         donebutton: false,
         frame: 'game.htm',
         cb: function() {
