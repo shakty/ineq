@@ -4,6 +4,12 @@
   font-size: 20px;
 }
 
+#myDiv {
+  margin-top: 40px;
+  border-radius: 25px;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
 /* Fix this */
 .income-tooltip {
   background: white;
@@ -18,18 +24,18 @@
 
 #examples-table {
   width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .example-td-title {
   width: 100px;
-  text-transform: capitalize;
   font-weight: bold;
 }
 
 .example-td-text {
   width: 100%;
   text-align: left;
-  padding: 5px;
+  padding: 5px 20px;
 }
 
 #click-descr {

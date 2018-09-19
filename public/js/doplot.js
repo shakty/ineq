@@ -27,7 +27,7 @@ function doPlot(s) {
     if (!myPlot) throw new Error('Could not find requested div: ' + divId);
 
     // Size.
-    myPlot.style.width = s.plotWidth || '800px';
+    myPlot.style.width = s.plotWidth || '100%'; // '800px';
     myPlot.style.height = s.plotHeight || '400px';
 
     // Examples Div.
@@ -204,7 +204,7 @@ function doPlot(s) {
             // autorange: false
         },
         yaxis: {
-            title: 'Income Share (%) of Total',
+            title: 'Income', // (%) of Total',
             domain: [0.25, 1],
             hoverformat: '.2r',
             range: yIncomeRange,
@@ -212,6 +212,7 @@ function doPlot(s) {
         },
 
         yaxis2: {
+            title: 'Talent',
             domain: [0, 0.2],
             hoverformat: '.2r',
             range: [0, 100],
@@ -224,7 +225,8 @@ function doPlot(s) {
         },
         xaxis2: {
             anchor: 'y2',
-            title: 'Talent',
+            title: 'Click on the income distribution to get examples about ' +
+                'the corresponding lifestyle [in the USA].',
             range: [ -padSides, right + padSides],
             // hoverformat: '.2r'
         },
