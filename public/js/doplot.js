@@ -204,7 +204,7 @@ function doPlot(s) {
             // autorange: false
         },
         yaxis: {
-            title: 'Income', // (%) of Total',
+            title: '<b>Income</b>', // (%) of Total',
             domain: [0.25, 1],
             hoverformat: '.2r',
             range: yIncomeRange,
@@ -212,7 +212,7 @@ function doPlot(s) {
         },
 
         yaxis2: {
-            title: 'Talent',
+            title: '<b>Talent</b>',
             domain: [0, 0.2],
             hoverformat: '.2r',
             range: [0, 100],
@@ -225,8 +225,10 @@ function doPlot(s) {
         },
         xaxis2: {
             anchor: 'y2',
-            title: 'Click on the income distribution to get examples about ' +
-                'the corresponding lifestyle [in the USA].',
+            title: '<b>Mouse over</b> the income distribution to see the ' +
+                'level of talent for that person.<br><b>Click</b> ' +
+                'to learn about ' +
+                'examples about corresponding lifestyle [in the USA].',
             range: [ -padSides, right + padSides],
             // hoverformat: '.2r'
         },
