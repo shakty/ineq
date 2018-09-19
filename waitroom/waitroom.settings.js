@@ -64,7 +64,7 @@ module.exports = {
      *
      * After the max waiting time expired clients are disconnected
      */
-    MAX_WAIT_TIME: 90000,
+    // MAX_WAIT_TIME: 90000,
 
     /**
      * ## START_DATE (string|object) Optional
@@ -437,7 +437,17 @@ module.exports = {
      *
      * A button is added to the interface
      */
-    // ALLOW_PLAY_WITH_BOTS: true
+    ALLOW_PLAY_WITH_BOTS: true,
+
+    /** ### ALLOW_SELECT_TREATMENT
+     *
+     * Allows a player to select the treatment for the game
+     *
+     * This option requires `ALLOW_PLAY_WITH_BOTS` to be TRUE.
+     *
+     * A button is added to the interface.
+     */
+    // ALLOW_SELECT_TREATMENT: true
 
 
 };

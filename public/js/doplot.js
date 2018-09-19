@@ -250,22 +250,36 @@ function doPlot(s) {
         points = getPointsFromEvent(eventData, { skipTalent: true });
         if (!points) return;
 
-        var text, annotation;
-
+        var textIncome, annotationIncome;
+        var text;
+        
         text = '<span class="income-tooltip">';
         text += 'Income = ' + eventData.points[0].y.toPrecision(2);
-        text += '<br>Talent = ' + points[tIdx];
         text += '</span>';
         
-        annotation = {
+        annotationIncome = {
             text: text,
             x: eventData.points[0].x,
             y: parseFloat(eventData.points[0].y.toPrecision(4))
-        }
+        };
 
+        text = '<span class="income-tooltip">';
+        text += '<br>Talent = ' + points[tIdx];
+        text += '</span>';
+        
+        annotationTalent = {
+            text: text,
+            x: points[tIdx],
+            y: yTalent[points[tIdx]],
+            xref: 'x2',
+            yref: 'y2'
+        };
+        
         // annotations = self.layout.annotations || [];
         // annotations.push(annotation);
-        Plotly.relayout(myPlot, { annotations: [ annotation ] })
+        Plotly.relayout(myPlot, {
+            annotations: [ annotationIncome, annotationTalent ]
+        })
         
         writeExamples(points[iIdx], null, points[tIdx], null);
     });

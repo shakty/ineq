@@ -49,7 +49,20 @@ module.exports = {
     // Number of game rounds repetitions.
     REPEAT: 4,
 
+    incomeMean: 110,
 
+    incomeSd: 10,
+
+    povertyLevel: 0.02,
+
+    multIncome: 1000,
+
+    multPoverty: 1000,
+
+    incIncome: 5,
+
+    // incPoverty: 200
+    
     // # Treatments definition.
 
     // They can contain any number of properties, and also overwrite
@@ -60,28 +73,22 @@ module.exports = {
 
     treatments: {
 
-        standard: {
-            fullName: "Standard Treatment",
-            description: "---",
-
-            incomeMean: 110,
-
-            incomeSd: 10,
-
-            povertyLevel: 0.02,
-
-            multIncome: 1000,
-
-            multPoverty: 1000,
-
-            incIncome: 5,
+        perfect: {
+           
+            description: "Perfect match from talent to income",
 
             mapType: 'PERFECT'
 
-            // incPoverty: 200
-           
-         
-        }
+        },
 
+        random: {
+            
+            description: "Random match of talent and income",
+
+            mapType: 'RANDOM'
+
+            // incPoverty: 200           
+         
+        },
     }
 };
