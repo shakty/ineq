@@ -141,6 +141,7 @@ function doPlot(s) {
     income = {
         x: x,
         y: yIncome,
+        hoverinfo: 'y',
         name: 'Income',
         mode: 'scatter',
         line: {
@@ -151,6 +152,7 @@ function doPlot(s) {
     povertyLine = {
         x: x,
         y: yPoverty,
+        hoverinfo: 'y',
         name: 'Poverty Line',
         mode: 'lines',
         line: {
@@ -168,11 +170,12 @@ function doPlot(s) {
     talent = {
         x: x,
         y: yTalent,
+        hoverinfo: 'x',
         name: 'Talent',
         mode: 'lines',
         line: {
             color: '#000',
-            width: 6
+            width: 8
         },
         xaxis: 'x2',
         yaxis: 'y2'
@@ -343,7 +346,7 @@ function doPlot(s) {
             health: {
                 text: 'Can afford any treatment for any curable disease from ' +
                     'the best doctors.',
-                img: 'hospitalA.jpg'
+                img: 'hospital1.jpg'
             },
             vacation: {
                 text: 'Anywhere in the world exclusive residences',
@@ -490,7 +493,7 @@ function doPlot(s) {
     }
 
     function mapIncomeToExamples(income) {
-        return J.randomInt(-1, (examples.length - 1));
+        return 0; //J.randomInt(-1, (examples.length - 1));
     }
 }
 

@@ -12,7 +12,7 @@
 
 .example-img {
   width: 150px;
-  height: 150px;
+  height: 100px;
 }
 
 #examples-table {
@@ -22,11 +22,12 @@
 .example-td-title {
   width: 100px;
   text-transform: capitalize;
+  font-weight: bold;
 }
 
 .example-td-text {
   width: 100%;
-  text-align: center;
+  text-align: left;
   padding: 5px;
 }
 
