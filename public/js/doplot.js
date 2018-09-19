@@ -24,8 +24,8 @@ function doPlot(s) {
     if (!myPlot) throw new Error('Could not find requested div: ' + divId);
 
     // Size.
-    myPlot.style.width = s.plotWidth || '700px';
-    myPlot.style.height = s.plotHeight || '500px';
+    myPlot.style.width = s.plotWidth || '800px';
+    myPlot.style.height = s.plotHeight || '400px';
 
     // Examples Div.
 
@@ -222,7 +222,7 @@ function doPlot(s) {
             range: [ -padSides, right + padSides],
             // hoverformat: '.2r'
         },
-        showlegend: false
+        // showlegend: false
     };
 
     config = {
@@ -463,7 +463,7 @@ function doPlot(s) {
     houseImg = document.getElementById('house-img');
     commuteText = document.getElementById('commute-text-td');
     commuteImg = document.getElementById('commute-img');
-    healthText = document.getElementById('healt-text-td');
+    healthText = document.getElementById('health-text-td');
     healthImg = document.getElementById('health-img');
     vacationText = document.getElementById('vacation-text-td');
     vacationImg = document.getElementById('vacation-img');

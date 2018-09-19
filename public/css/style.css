@@ -19,12 +19,18 @@
   width: 100%;
 }
 
-.example-td-title: {
+.example-td-title {
   width: 100px;
+  text-transform: capitalize;
 }
 
-.example-td-text: {
-  width: 600px;
-  text-align: left;
+.example-td-text {
+  width: 100%;
+  text-align: center;
   padding: 5px;
+}
+
+#click-descr {
+  display: block;
+  margin-bottom: 2em;
 }
