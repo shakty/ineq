@@ -32,6 +32,57 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // Additional debug information while developing the game.
         // this.debugInfo = node.widgets.append('DebugInfo', header)
+
+        this.decisionButtons = (function() {            
+            var btnUnfair, btnRedstr;
+            var toggleUnfair, toggleRedstr;
+            var class1, class2;
+            class1 = 'btn btn-lg btn-primary';
+            class2 = 'btn btn-lg btn-danger';
+            return {
+                create: function() {                    
+                    btnUnfair = document.createElement('button');
+                    btnUnfair.className = class1;
+                    btnUnfair.innerHTML = 'Unfair';
+                    toggleUnfair = false;
+                    btnUnfair.onclick = function() {
+                        if (toggleUnfair) {
+                            btnUnfair.className = class1;
+                            toggleUnfair = false;
+                        }
+                        else {
+                            btnUnfair.className = class2;
+                            toggleUnfair = true;
+                        }
+                    };
+                    header.appendChild(btnUnfair);
+
+                    header.appendChild(document.createTextNode(' '));
+                    
+                    btnRedstr = document.createElement('button');
+                    btnRedstr.className = class1;
+                    btnRedstr.innerHTML = 'Redistribute';
+                    toggleRedstr = false;
+                    btnRedstr.onclick = function() {
+                        if (toggleRedstr) {
+                            btnRedstr.className = class1;
+                            toggleRedstr = false;
+                        }
+                        else {
+                            btnRedstr.className = class2;
+                            toggleRedstr = true;
+                        }
+                    };
+                    header.appendChild(btnRedstr);
+                },
+                reset: function() {
+                    btnRedstr.className = class1;
+                    toggleRedstr = false;
+                    btnUnfair.className = class1;
+                    toggleUnfair = false;
+                }
+            };
+        })();
     });
 
     stager.extendStep('instructions', {
@@ -39,47 +90,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('v1', {
-        donebutton: false,
+        // donebutton: false,
         frame: 'game.htm',
         cb: function() {
-            var header, btnUnfair, btnRedstr;
-            var toggleUnfair, toggleRedstr;
-            
-            header = W.getHeader();
-            btnUnfair = document.createElement('button');
-            btnUnfair.className = 'btn btn-lg btn-primary';
-            btnUnfair.innerHTML = 'Unfair';
-            toggleUnfair = false;
-            btnUnfair.onclick = function() {
-                if (toggleUnfair) {
-                    btnUnfair.className = 'btn btn-lg btn-primary';
-                    toggleUnfair = false;
-                }
-                else {
-                    btnUnfair.className = 'btn btn-lg btn-danger';
-                    toggleUnfair = true;
-                }
-            };
-            header.appendChild(btnUnfair);
-
-            header.appendChild(document.createTextNode(' '));
-            
-            btnRedstr = document.createElement('button');
-            btnRedstr.className = 'btn btn-lg btn-primary';
-            btnRedstr.innerHTML = 'Redistribute';
-            toggleRedstr = false;
-            btnRedstr.onclick = function() {
-                if (toggleRedstr) {
-                    btnRedstr.className = 'btn btn-lg btn-primary';
-                    toggleRedstr = false;
-                }
-                else {
-                    btnRedstr.className = 'btn btn-lg btn-danger';
-                    toggleRedstr = true;
-                }
-            };
-            header.appendChild(btnRedstr);
-            
+            this.decisionButtons.create();
             console.log('v1');
         }
     });
@@ -87,8 +101,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('v2', {
         donebutton: false,
-        frame: 'game.htm',
+        frame: 'game2.htm',
         cb: function() {
+            this.decisionButtons.reset();
             console.log('v2');
         }
     });

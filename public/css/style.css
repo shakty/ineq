@@ -5,8 +5,7 @@
 }
 
 #myDiv {
-  margin-top: 40px;
-  border-radius: 25px;
+  /* margin-top: 40px; */
   /* border: 1px solid #CCC;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
@@ -23,10 +22,17 @@
   border-radius: 25px;
 }
 
+/*
+#examples {
+  width: 48%;
+}
+*/
+
 #examples-table {
   width: 100%;
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
+
 
 .example-td-title {
   width: 100px;
@@ -42,4 +48,35 @@
 #click-descr {
   display: block;
   margin-bottom: 2em;
+}
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    
+    /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltiptext-hovered {
+    visibility: visible;
+    opacity: 1;
 }

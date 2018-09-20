@@ -145,6 +145,9 @@ function doPlot(s) {
         x: x,
         y: yIncome,
         hoverinfo: 'y',
+        hoverlabel: {
+            font: { size: 18 }
+        },
         name: 'Income',
         mode: 'scatter',
         line: {
@@ -156,6 +159,9 @@ function doPlot(s) {
         x: x,
         y: yPoverty,
         hoverinfo: 'y',
+        hoverlabel: {
+            font: { size: 18 }
+        },
         name: 'Poverty Line',
         mode: 'lines',
         line: {
@@ -174,6 +180,9 @@ function doPlot(s) {
         x: x,
         y: yTalent,
         hoverinfo: 'x',
+        hoverlabel: {
+            font: { size: 18 }
+        },
         name: 'Talent',
         mode: 'lines',
         line: {
@@ -277,7 +286,12 @@ function doPlot(s) {
         annotationIncome = {
             text: text,
             x: eventData.points[0].x,
-            y: parseFloat(eventData.points[0].y.toPrecision(4))
+            y: parseFloat(eventData.points[0].y.toPrecision(4)),
+            font: { size: 14 },
+            bgcolor: '#FFF',
+            bordercolor: '#000',
+            borderpad: 2,
+            arrowwiedth: 0.5
         };
 
         text = '<span class="income-tooltip">';
@@ -289,7 +303,12 @@ function doPlot(s) {
             x: points[tIdx],
             y: yTalent[points[tIdx]],
             xref: 'x2',
-            yref: 'y2'
+            yref: 'y2',
+            font: { size: 14 },
+            bgcolor: '#FFF',
+            bordercolor: '#000',
+            borderpad: 2,
+            arrowwiedth: 0.5
         };
         
         // annotations = self.layout.annotations || [];

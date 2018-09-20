@@ -1,0 +1,61 @@
+<!doctype html>
+<title>Ineq</title>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<script src="js/plotly.js"></script>
+<script src="js/jstat.js"></script>
+<script src="js/doplot.js"></script>
+<body>
+  <div id="container">
+    <div id="myDiv" style="float: left"></div>
+    <div id="examples" style="float: right">
+      <span id="click-descr">
+        <!-- Click on the income distribution to get examples about the
+        corresponding lifestyle [in the USA]. -->
+      </span>
+      <table id="examples-table" class="table table-responsive">
+        <tr>
+          <td class="example-td-title">HOUSING</td>
+          <td class="example-td-text" id="house-text-td"> - </td>
+          <td id="house-img-td">
+            <img id="house-img" class="example-img" src="/images/no-image.png" />
+          </td>
+        </tr>
+        <tr>
+          <td class="example-td-title">COMMUTE</td>
+          <td class="example-td-text" id="commute-text-td"> - </td>
+          <td id="commute-img-td">
+            <img id="commute-img" class="example-img" src="/images/no-image.png" />
+          </td>
+        </tr>
+        <tr>
+          <td class="example-td-title">HEALTH</td>
+          <td class="example-td-text" id="health-text-td"> - </td>
+          <td id="health-img-td">
+            <img id="health-img" class="example-img" src="/images/no-image.png" />
+          </td>
+        </tr>
+        <tr>
+          <td class="example-td-title">VACATION</td>
+          <td class="example-td-text" id="vacation-text-td"> - </td>
+          <td id="vacation-img-td">
+            <img id="vacation-img" class="example-img" src="/images/no-image.png" />
+          </td>
+        </tr>
+        <tr>
+          <td class="example-td-title">SCHOOL</td>
+          <td class="example-td-text" id="school-text-td"> - </td>
+          <td id="school-img-td">
+            <img id="school-img" class="example-img" src="/images/no-image.png" />
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+<script>
+  window.onload = function() {
+      node.game.settings.plotWidth = '50%';
+      doPlot(node.game.settings);
+  };
+</script>
