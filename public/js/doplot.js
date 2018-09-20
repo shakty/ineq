@@ -43,7 +43,7 @@ function doPlot(s) {
     
     var nPoints = 'undefined' === typeof s.nPoints ? 100 : s.nPoints;
     var x = jStat.seq(left, right, nPoints);
-
+    
     // Income and Poverty distribution.
     var incomeMean = 'undefined' === typeof s.incomeMean ?
         100 : s.incomeMean;
@@ -102,8 +102,8 @@ function doPlot(s) {
         var mapTalent2Income = new Array(nPoints);
         if (mapType === 'RANDOM') {
             mapIncome2Talent = J.shuffle(x);
-            for (i = 0; i < nPoints; i++) {
-                mapTalent2Income[mapIncome2Talent[i]] = i;
+            for (i = 0; i < nPoints; ) {
+                mapTalent2Income[mapIncome2Talent[i]] = i++;
             }
         }
         else if (mapType === "PERFECT") {
@@ -272,49 +272,17 @@ function doPlot(s) {
     });
 
     myPlot.on('plotly_click', function(eventData) {
-        var points;
+        var points, annI, annT;
         points = getPointsFromEvent(eventData, { skipTalent: true });
         if (!points) return;
 
-        var textIncome, annotationIncome;
-        var text;
+        annI = getAnnotation(eventData.points[0].x,
+                             parseFloat(eventData.points[0].y.toPrecision(4)),
+                             true);
+        annT = getAnnotation(points[tIdx], yTalent[points[tIdx]]);
         
-        text = '<span class="income-tooltip">';
-        text += 'Income = ' + eventData.points[0].y.toPrecision(2);
-        text += '</span>';
-        
-        annotationIncome = {
-            text: text,
-            x: eventData.points[0].x,
-            y: parseFloat(eventData.points[0].y.toPrecision(4)),
-            font: { size: 14 },
-            bgcolor: '#FFF',
-            bordercolor: '#000',
-            borderpad: 2,
-            arrowwiedth: 0.5
-        };
-
-        text = '<span class="income-tooltip">';
-        text += '<br>Talent = ' + points[tIdx];
-        text += '</span>';
-        
-        annotationTalent = {
-            text: text,
-            x: points[tIdx],
-            y: yTalent[points[tIdx]],
-            xref: 'x2',
-            yref: 'y2',
-            font: { size: 14 },
-            bgcolor: '#FFF',
-            bordercolor: '#000',
-            borderpad: 2,
-            arrowwiedth: 0.5
-        };
-        
-        // annotations = self.layout.annotations || [];
-        // annotations.push(annotation);
         Plotly.relayout(myPlot, {
-            annotations: [ annotationIncome, annotationTalent ]
+            annotations: [ annI, annT ]
         })
         
         writeExamples(points[iIdx], null, points[tIdx], null);
@@ -322,6 +290,28 @@ function doPlot(s) {
 
     // Helper functions.
 
+    function getAnnotation(x, y, income) {
+        var out;
+        out = {
+            x: x,
+            y: y,
+            font: { size: 14 },
+            bgcolor: '#FFF',
+            bordercolor: '#000',
+            borderpad: 2,
+            arrowwidth: 0.5
+        };
+        if (income) { 
+            out.text = 'Income = ' + y;
+        }
+        else {
+            out.text = 'Talent = ' + x;
+            out.xref = 'x2';
+            out.yref = 'y2';
+        }
+        return out;
+    }
+    
     function getPointsFromEvent(eventData, opts) {
         var curve, incomePoint, talentPoint;
         curve = eventData.points[0].curveNumber; 
