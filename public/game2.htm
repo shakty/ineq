@@ -8,11 +8,7 @@
 <body>
   <div id="container">
     <div id="myDiv" style="float: left"></div>
-    <div id="examples" style="float: right">
-      <span id="click-descr">
-        <!-- Click on the income distribution to get examples about the
-        corresponding lifestyle [in the USA]. -->
-      </span>
+    <div id="examples" style="float: right; width: 49%; font-size: 14px">
       <table id="examples-table" class="table table-responsive">
         <tr>
           <td class="example-td-title">HOUSING</td>
@@ -51,11 +47,21 @@
         </tr>
       </table>
     </div>
+    <br>
+     <span id="click-descr">
+       <br>
+       <br>
+       <b>Mouse over</b> the income distribution to see the  
+       level of talent for that person.<br><b>Click</b>
+       to learn about examples about corresponding lifestyle [in the USA].
+     </span>
   </div>
 </body>
 <script>
   window.onload = function() {
       node.game.settings.plotWidth = '50%';
+      node.game.settings.legendOrientation = 'h';
+      node.game.settings.talentXAxisTitle = false;
       doPlot(node.game.settings);
   };
 </script>

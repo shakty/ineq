@@ -73,7 +73,13 @@ function doPlot(s) {
 
     var incPoverty = 'undefined' === typeof s.incPoverty ?
         0 : s.incPoverty;
-    
+
+    var talentXAxisTitle = 'undefined' !== typeof s.talentXAxisTitle ?
+        s.talentXAxisTitle :
+        '<b>Mouse over</b> the income distribution to see the ' +
+        'level of talent for that person.<br><b>Click</b> ' +
+        'to learn about examples about corresponding lifestyle [in the USA].'
+
     // Var iniatialized later.
 
     // Plotly traces.
@@ -235,14 +241,14 @@ function doPlot(s) {
         },
         xaxis2: {
             anchor: 'y2',
-            title: '<b>Mouse over</b> the income distribution to see the ' +
-                'level of talent for that person.<br><b>Click</b> ' +
-                'to learn about ' +
-                'examples about corresponding lifestyle [in the USA].',
+            title: talentXAxisTitle,
             range: [ -padSides, right + padSides],
             // hoverformat: '.2r'
         },
-        // showlegend: false
+        legend: {
+            showlegend: true,
+            orientation: s.legendOrientation ? s.legendOrientation : 'v'
+        }
     };
 
     config = {
