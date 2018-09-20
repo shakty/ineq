@@ -43,6 +43,7 @@ function doPlot(s) {
     
     var nPoints = 'undefined' === typeof s.nPoints ? 100 : s.nPoints;
     var x = jStat.seq(left, right, nPoints);
+    var xZeroBased = jStat.seq(0, (nPoints - 1), nPoints);
     
     // Income and Poverty distribution.
     var incomeMean = 'undefined' === typeof s.incomeMean ?
@@ -101,14 +102,14 @@ function doPlot(s) {
         var mapIncome2Talent = new Array(nPoints);
         var mapTalent2Income = new Array(nPoints);
         if (mapType === 'RANDOM') {
-            mapIncome2Talent = J.shuffle(x);
+            mapIncome2Talent = J.shuffle(xZeroBased);
             for (i = 0; i < nPoints; ) {
                 mapTalent2Income[mapIncome2Talent[i]] = i++;
             }
         }
         else if (mapType === "PERFECT") {
-            mapTalent2Income = x;
-            mapIncome2Talent = x; 
+            mapTalent2Income = xZeroBased;
+            mapIncome2Talent = xZeroBased;
         }
         else {
             throw new Error('Unknown map type :' + mapType);
@@ -279,7 +280,7 @@ function doPlot(s) {
         annI = getAnnotation(eventData.points[0].x,
                              parseFloat(eventData.points[0].y.toPrecision(4)),
                              true);
-        annT = getAnnotation(points[tIdx], yTalent[points[tIdx]]);
+        annT = getAnnotation((points[tIdx] + 1), yTalent[points[tIdx]]);
         
         Plotly.relayout(myPlot, {
             annotations: [ annI, annT ]
@@ -298,8 +299,8 @@ function doPlot(s) {
             font: { size: 14 },
             bgcolor: '#FFF',
             bordercolor: '#000',
-            borderpad: 2,
-            arrowwidth: 0.5
+            borderpad: 2
+            // arrowwidth: 0.5
         };
         if (income) { 
             out.text = 'Income = ' + y;
@@ -320,7 +321,7 @@ function doPlot(s) {
         if (curve === 1) return false;
 
         opts = opts || {};
-        
+
         // Should I skip others?
         if (opts.skipTalent && curve === 2) return false;       
         
@@ -330,7 +331,7 @@ function doPlot(s) {
         }
         else {
             talentPoint = eventData.points[0].pointNumber;
-            incomePoint = mapIncome2Talent[talentPoint];
+            incomePoint = mapTalent2Income[talentPoint];
         }
 
         // Register action (hover or click).
